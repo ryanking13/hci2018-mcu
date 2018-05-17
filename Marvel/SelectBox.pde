@@ -11,7 +11,7 @@ ScrollableList setMovieList(ControlP5 cp5, ArrayList<String> movieList, int size
                         .addItems(movieList)
                         .close();            
                        
-  return sl;     
+  return sl;
 }
 
 /* example code */
