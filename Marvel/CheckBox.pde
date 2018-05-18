@@ -2,6 +2,7 @@ import controlP5.*;
 import java.util.*;
 
 
+// Not Using
 CheckBox setTypeCheckBox(ControlP5 cp5, ArrayList<String> typeList) {
   
   int numTypes = typeList.size();
@@ -26,23 +27,30 @@ CheckBox setTypeCheckBox(ControlP5 cp5, ArrayList<String> typeList) {
 }
 
 
-CheckBox setTimelineCheckBox(ControlP5 cp5, ArrayList<String> movieList) {
+CheckBox setTimelineCheckBox(ControlP5 cp5, ArrayList<String> movieList, int posY) {
   
   
   int numMovies = movieList.size();
-  int padX = 50;
-  int padY = 200;
+  int posX = 50;
   int sizeY = 150;
-  int sizeX = (width - padX*2) / numMovies;
+  int sizeX = (width - posX*2) / numMovies;
   
   CheckBox cb = cp5.addCheckBox("timelineCheckBox")
-                   .setPosition(padX, padY)
+                   .setPosition(posX, posY)
                    .setSize(sizeX, sizeY);
                    
   cb.setItemsPerRow(numMovies);
   
   for(int i = 0; i < numMovies; i++) {
     cb.addItem(movieList.get(i), i);
+    cb.getItem(i).lock();
+    cb.getItem(i).addCallback(new CallbackListener(){
+      public void controlEvent(CallbackEvent ev) {
+        if(ev.getAction() == 1){
+          onTimelineClick(ev.getController().getName());
+        }
+      }
+    });
   }
                    
   return cb;

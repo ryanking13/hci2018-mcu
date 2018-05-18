@@ -41,6 +41,7 @@ void typeButtons(int n) {
   choice.type = (String)m.get("name");
 }
 
+// Not Using
 ButtonBar setTimelineButtons(ControlP5 cp5, ArrayList<String> movieList, int posY) {
 
   int moviesCount = movieList.size();

@@ -1,24 +1,66 @@
 import controlP5.*;
 
-void setExplanationBox(ControlP5 cp5, int posY) {
+class ExplanationBox {
+  public Textarea textarea;
+  public ExplanationCanvas canvas;
+}
+
+class ExplanationCanvas extends Canvas {
+  
+  public int posY;
+  public int posX;
+  public int sizeX;
+  public int sizeY;
+  public int imageSizeX;
+  public int imageSizeY;
+  public PImage img;
+  
+  public ExplanationCanvas(int posX, int posY, int sizeY, int imageSizeX, int imageSizeY) {
+    this.posY = posY;
+    this.posX = posX;
+    this.sizeX = width - 2*posX;
+    this.sizeY = sizeY;
+    this.imageSizeX = imageSizeX;
+    this.imageSizeY = imageSizeY;
+  }
+  
+  public void updateImage(PImage img){
+    this.img = img;
+  }
+  
+  public void draw(PGraphics pg){
+    pg.fill(0,0,150,100);
+    pg.rect(posX, posY, sizeX, sizeY);
+    
+    int imgX = posX + sizeX - imageSizeX;
+    int imgY = posY;
+    if (img != null)
+      pg.image(this.img, imgX, imgY, imageSizeX, imageSizeY);
+  }
+}
+
+ExplanationBox setExplanationBox(ControlP5 cp5, int posY) {
   
   int posX = 50;
   int sizeY = 500;
+  
+  int imageSizeX = 200;
+  int imageSizeY = 400;
+  
+  ExplanationBox eBox = new ExplanationBox();
+  
   Textarea textarea = cp5.addTextarea("explanation")
                 .setPosition(posX, posY)
-                .setSize(width - 2*posX, sizeY)
-                .setFont(createFont("arial",16))
-                .setColorBackground(color(0,0,255,128));
-                
-                
-  textarea.setText("Lorem Ipsum is simply dummy text of the printing and typesetting"
-                  +" industry. Lorem Ipsum has been the industry's standard dummy text"
-                  +" ever since the 1500s, when an unknown printer took a galley of type"
-                  +" and scrambled it to make a type specimen book. It has survived not"
-                  +" only five centuries, but also the leap into electronic typesetting,"
-                  +" remaining essentially unchanged. It was popularised in the 1960s"
-                  +" with the release of Letraset sheets containing Lorem Ipsum passages,"
-                  +" and more recently with desktop publishing software like Aldus"
-                  +" PageMaker including versions of Lorem Ipsum."
-                  );
+                .setSize(width - 2*posX - imageSizeX, sizeY)
+                .setFont(createFont("NanumGothic",16))
+                .setColorBackground(color(0,0,0));
+  
+  ExplanationCanvas cc = new ExplanationCanvas(posX, posY, sizeY, imageSizeX, imageSizeY);
+  cc.post();
+  cp5.addCanvas(cc);
+  
+  eBox.textarea = textarea;
+  eBox.canvas = cc;
+  
+  return eBox;
 }
