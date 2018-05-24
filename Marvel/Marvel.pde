@@ -6,12 +6,11 @@ ScrollableList movieSelectList;
 ButtonBar typeButtons;
 Button searchButton;
 //ButtonBar movieTimeline;
-CheckBox movieTimeline;
+ArrayList<Button> timeline;
 Choice choice;
 ExplanationBox eBox;
 
 ArrayList<String> targetMovieList;
-ArrayList<String> previousMovieList;
 ArrayList<String> typeList;
 ArrayList<Explanation> explanations;
 
@@ -21,17 +20,9 @@ void setup() {
   choice = new Choice();
   
   targetMovieList = new ArrayList<String>();
-  targetMovieList.add("Avengers 3");
-  targetMovieList.add("Captain Marvel");
-  
-  previousMovieList = new ArrayList<String>();
-  previousMovieList.add("Avengers 1");
-  previousMovieList.add("Avengers 2");
-  previousMovieList.add("Ironman 1");
-  previousMovieList.add("Ironman 2");
-  previousMovieList.add("Ironman 3");
-  previousMovieList.add("Captain America");
-  
+  targetMovieList.add("Avengers 1");
+  targetMovieList.add("Ironman 2");
+
   typeList = new ArrayList<String>();
   typeList.add("Event");
   typeList.add("Character");
@@ -40,10 +31,10 @@ void setup() {
   
   movieSelectList = setMovieList(cp5, targetMovieList, 50);
   //setTypeCheckBox(cp5, typeList);
-  typeButtons = setTypeButtons(cp5, typeList, 100);
-  searchButton = setSearchButton(cp5, 150);
+  typeButtons = setTypeButtons(cp5, typeList, 120);
+  searchButton = setSearchButton(cp5, 50);
   //movieTimeline = setTimelineButtons(cp5, previousMovieList, 200);
-  movieTimeline = setTimelineCheckBox(cp5, previousMovieList, 200);
+  //movieTimeline = setTimelineCheckBox(cp5, previousMovieList, 200);
   eBox = setExplanationBox(cp5, 400);
   
   movieSelectList.bringToFront();
@@ -51,67 +42,61 @@ void setup() {
 
 void draw() {
   background(0);
+  rect(50, 200, width-100, 150);
 }
 
 
 /* handlers */
+void generateTimeline() {
+  
+  if (cp5.getGroup("timeline") != null) {
+    cp5.getGroup("timeline").remove();
+  }
 
-void hightlightTimeline() {
+  cp5.addGroup("timeline")
+     .setPosition(50, 200)
+     .hideBar();
   
-  CColor highlightColor = new CColor();
-  CColor normalColor = new CColor();
-  highlightColor.setBackground(color(200,0,0));
-  normalColor.setBackground(color(0, 45, 90));
-  
-  List timeline = movieTimeline.getItems();
-  
-  for(int i = 0; i < timeline.size(); i++) {
-    Toggle box = (Toggle)timeline.get(i);
-    String movieName = (String)box.getName();
-    
-    boolean found = false;
-    for(int j = 0; j < explanations.size(); j++) {
-      Explanation expl = explanations.get(j);
-      if(expl.targetMovieName == choice.movie && expl.ownMovieName == movieName) {
-        box.setColor(highlightColor);
-        box.unlock();
-        
-        found = true;
-        break;
-      }
-    }
-    
-    if(!found) {
-      box.setColor(normalColor);
-      box.setValue(0);
-      box.lock();
+  timeline = new ArrayList<Button>();
+  for(Explanation e: explanations) {
+    if (e.targetMovieName == choice.movie && e.type == choice.type) {
+      Button b = cp5.addButton(e.name)
+                    .setPosition(e.timelinePosX, 0)
+                    .setSize(e.timelineLength, 150)
+                    .setColor(e.timelineColor)
+                    .setColorBackground(e.timelineColor.getBackground())
+                    .setGroup("timeline")
+                    .addCallback(new CallbackListener(){
+                      public void controlEvent(CallbackEvent ev) {
+                        if(ev.getAction() == 1){
+                          onTimelineClick(ev.getController().getName());
+                        }
+                      }
+                    });
+      timeline.add(b);
     }
   }
 }
 
-void onTimelineClick(String movieName) {
+void onTimelineClick(String timelineName) {
   
-  CColor highlightColor = new CColor();
-  CColor normalColor = new CColor();
-  highlightColor.setBackground(color(200,0,0));
-  normalColor.setBackground(color(0, 45, 90));
-  
-  List timeline = movieTimeline.getItems();
+  if (timeline == null) return;
   
   for(int i = 0; i < timeline.size(); i++) {
-    Toggle box = (Toggle)timeline.get(i);
-    String toggleName = (String)box.getName();
+    Button b = timeline.get(i);
+    String name = (String)b.getName();
     
-    if (toggleName != movieName) {
-      box.setValue(0);
+    if (name != timelineName) {
+      b.setValue(0);
     }
   }
     
   for(int j = 0; j < explanations.size(); j++) {
     Explanation expl = explanations.get(j);
-    if(expl.targetMovieName == choice.movie && expl.ownMovieName == movieName) {
+    if(expl.targetMovieName == choice.movie && expl.name == timelineName && expl.type == choice.type) {
       eBox.textarea.setText(expl.explanation);
       eBox.canvas.updateImage(expl.image);
+      eBox.canvas.updateIcons(expl.icons);
     }
   }
 }

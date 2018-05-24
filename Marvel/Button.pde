@@ -3,17 +3,20 @@ import java.util.*;
 
 Button setSearchButton(ControlP5 cp5, int posY) {
 
-  int sizeX = 100;
-  int sizeY = 40;
+  int sizeX = 200;
+  int sizeY = 120;
+  //int posX = width / 2 - sizeX / 2;
+  int posX = width/2 + 100;
+  
   Button b = cp5.addButton("search")
-                .setPosition(width / 2 - sizeX / 2, posY)
+                .setPosition(posX, posY)
                 .setSize(sizeX, sizeY);
   
   return b;
 }
 
 public void search(int value) {
-  hightlightTimeline();
+  generateTimeline();
 }
 
 
@@ -21,9 +24,8 @@ ButtonBar setTypeButtons(ControlP5 cp5, ArrayList<String> typeList, int posY) {
   
   int typesCount = typeList.size();
   int sizeX = 100 * typesCount;
-  int sizeY = 40;
-  
-  float posX = width/2 - sizeX / 2;
+  int sizeY = 50;
+  int posX = width/2 - sizeX / 2 - 100;
                  
   ButtonBar bb = cp5.addButtonBar("typeButtons")
                     .setPosition(posX, posY)
@@ -32,6 +34,9 @@ ButtonBar setTypeButtons(ControlP5 cp5, ArrayList<String> typeList, int posY) {
   for(int i = 0; i < typesCount; i++) {
     bb.addItem(typeList.get(i), i);
   }
+  
+  bb.changeItem("Event","selected", true);
+  choice.type = "Event";
   
   return bb;
 }
