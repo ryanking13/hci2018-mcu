@@ -7,6 +7,7 @@ ButtonBar typeButtons;
 Button searchButton;
 //ButtonBar movieTimeline;
 ArrayList<Button> timeline;
+ArrayList<Timestamp> timestamps;
 Choice choice;
 ExplanationBox eBox;
 
@@ -28,6 +29,7 @@ void setup() {
   typeList.add("Character");
   
   explanations = getExplanations();
+  timestamps = getTimestamps();
   
   movieSelectList = setMovieList(cp5, targetMovieList, 50);
   //setTypeCheckBox(cp5, typeList);
@@ -68,12 +70,25 @@ void generateTimeline() {
                     .setGroup("timeline")
                     .addCallback(new CallbackListener(){
                       public void controlEvent(CallbackEvent ev) {
-                        if(ev.getAction() == 1){
+                        if(ev.getAction() == 6){
                           onTimelineClick(ev.getController().getName());
                         }
                       }
                     });
       timeline.add(b);
+    }
+  }
+  
+  for(Timestamp ts: timestamps) {
+    if (choice.movie == ts.movieName) {
+      cp5.addTextlabel("start")
+         .setText(ts.start)
+         .setPosition(50, 350)
+         .setSize(50, 50);
+      cp5.addTextlabel("end")
+         .setText(ts.end)
+         .setPosition(width-100, 350)
+         .setSize(50, 50);
     }
   }
 }
