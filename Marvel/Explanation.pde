@@ -53,6 +53,28 @@ ArrayList<Explanation> getExplanations() {
     avengers1BigEvent.explanation = avengers1BigEvent.explanation + avengers1BigEvent.explanation;
 
   explanations.add(avengers1BigEvent);
+
+  Explanation avengers1SmallEvent = new Explanation("Avengers 1", "무시무시한 이벤트", "Event");
+  CColor c00 = new CColor();
+  c00.setBackground(color(150,100,50));
+  c00.setForeground(color(200,150,50));
+  c00.setActive(color(250,200,50));
+  avengers1SmallEvent.timelineColor = c00;
+  avengers1SmallEvent.timelineLength = 150;
+  avengers1SmallEvent.timelinePosX = 300;
+  avengers1SmallEvent.image = loadImage("Images/ironman.jpg");
+  avengers1SmallEvent.icons.add(new ExplanationIcon("Images/ironman.jpg", "ironman"));
+  avengers1SmallEvent.icons.add(new ExplanationIcon("Images/ironman.jpg", "ironman2"));
+  avengers1SmallEvent.icons.add(new ExplanationIcon("Images/ironman.jpg", "ironman3"));
+  avengers1SmallEvent.icons.add(new ExplanationIcon("Images/ironman.jpg", "ironman4"));
+  avengers1SmallEvent.icons.add(new ExplanationIcon("Images/ironman.jpg", "ironman5"));
+  avengers1SmallEvent.explanation = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." + 
+                                  "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure" +
+                                  " dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non" +
+                                  " proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+  
+  explanations.add(avengers1SmallEvent);
+  
   
   Explanation Ironman2BigEvent = new Explanation("Ironman 2", "무시무시한 이벤트", "Event");
   CColor c1 = new CColor();

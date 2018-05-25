@@ -10,6 +10,7 @@ ArrayList<Button> timeline;
 ArrayList<Timestamp> timestamps;
 Choice choice;
 ExplanationBox eBox;
+Textlabel iconDescription;
 
 ArrayList<String> targetMovieList;
 ArrayList<String> typeList;
@@ -20,6 +21,8 @@ PFont Explanationfont;
 PFont ExplanationTitlefont;
 
 CColor colorset;
+
+int MAX_ICONS = 5;
 
 void setup() {
   size(1280, 1000);

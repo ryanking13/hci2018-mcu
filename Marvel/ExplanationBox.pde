@@ -35,6 +35,34 @@ class ExplanationCanvas extends Canvas {
   
   public void updateIcons(ArrayList<ExplanationIcon> icons) {
     this.icons = icons;
+    
+    if (icons != null){
+      for(int i = 0; i < icons.size(); i++) {
+        ExplanationIcon icon = icons.get(i);
+        icon.icon.resize(iconSize, iconSize);
+        PGraphics mask = createGraphics(icon.icon.width, icon.icon.height);
+        mask.beginDraw();
+        mask.smooth();
+        mask.background(0);
+        mask.fill(255);
+        mask.ellipse(icon.icon.width/2, icon.icon.height/2, icon.icon.width, icon.icon.height);
+        mask.endDraw();
+        icon.icon.mask(mask);
+      }
+    }
+    
+    
+    for(int i = 0; i < icons.size(); i++) {
+      cp5.get(Button.class, "explanationIcon" + str(i))
+         .setImage(icons.get(i).icon)
+         .setLabel(icons.get(i).description)
+         .show();
+    }
+    
+    for(int i = icons.size(); i < MAX_ICONS; i++) {
+      cp5.get(Button.class, "explanationIcon" + str(i))
+         .hide();
+    }
   }
   
   public void updateImage(PImage img){
@@ -52,21 +80,21 @@ class ExplanationCanvas extends Canvas {
     if (img != null)
       pg.image(this.img, imgX, imgY, imageSizeX, imageSizeY);
       
-    if (icons != null){
-      for(int i = 0; i < icons.size(); i++) {
-        ExplanationIcon icon = icons.get(i);
-        PGraphics mask = createGraphics(icon.icon.width, icon.icon.height);
-        mask.beginDraw();
-        mask.smooth();
-        mask.background(0);
-        mask.fill(255);
-        mask.ellipse(icon.icon.width/2, icon.icon.height/2, icon.icon.width, icon.icon.height);
-        mask.endDraw();
+    //if (icons != null){
+    //  for(int i = 0; i < icons.size(); i++) {
+    //    ExplanationIcon icon = icons.get(i);
+    //    PGraphics mask = createGraphics(icon.icon.width, icon.icon.height);
+    //    mask.beginDraw();
+    //    mask.smooth();
+    //    mask.background(0);
+    //    mask.fill(255);
+    //    mask.ellipse(icon.icon.width/2, icon.icon.height/2, icon.icon.width, icon.icon.height);
+    //    mask.endDraw();
         
-        icon.icon.mask(mask);
-        image(icon.icon, posX + padX * 2 + i*(iconSize + padX), posY + padY * 1.5, iconSize, iconSize);
-      }
-    }
+    //    icon.icon.mask(mask);
+    //    image(icon.icon, posX + padX * 2 + i*(iconSize + padX), posY + padY * 1.5, iconSize, iconSize);
+    //  }
+    //}
      
   }
 }
@@ -100,7 +128,32 @@ ExplanationBox setExplanationBox(ControlP5 cp5, int posY) {
                 .setSize(width - 2*posX - imageSizeX - 3 * padX, sizeY - iconSize - padY * 5)
                 .setFont(Explanationfont)
                 .setColor(color(0))
+                .bringToFront()
                 .disableColorBackground();
+                
+  for(int i = 0; i < MAX_ICONS; i++) {
+    cp5.addButton("explanationIcon" + str(i))
+       .setSize(iconSize, iconSize)
+       .setPosition(posX + padX * 2 + i*(iconSize + padX), posY + padY * 1.5)
+       .hide()
+       .addCallback(new CallbackListener(){
+         public void controlEvent(CallbackEvent ev) {
+           if(ev.getAction() == 6){ // hover
+             onIconHover(ev.getController().getLabel());
+           }
+           else if(ev.getAction() == 7){ // hover out
+             onIconHoverOut();
+           }
+         }
+       });
+  }
+  
+  iconDescription = cp5.addTextlabel("iconDescription")
+                       .setSize(200, 100)
+                       .setColor(color(0))
+                       .setColorBackground(color(0))
+                       .setFont(ExplanationTitlefont)
+                       .hide();
   
 
   
@@ -109,4 +162,15 @@ ExplanationBox setExplanationBox(ControlP5 cp5, int posY) {
   eBox.canvas = cc;
   
   return eBox;
+}
+
+void onIconHover(String description) {
+  iconDescription.setText(description)
+                 .setPosition(mouseX + 10, mouseY)
+                 .bringToFront()
+                 .show();
+}
+
+void onIconHoverOut() {
+  iconDescription.hide();
 }
