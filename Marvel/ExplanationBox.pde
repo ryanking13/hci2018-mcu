@@ -3,6 +3,7 @@ import controlP5.*;
 class ExplanationBox {
   public Textarea textarea;
   public ExplanationCanvas canvas;
+  public Textlabel title;
 }
 
 class ExplanationCanvas extends Canvas {
@@ -17,7 +18,10 @@ class ExplanationCanvas extends Canvas {
   public PImage img;
   public ArrayList<ExplanationIcon> icons;
   
-  public ExplanationCanvas(int posX, int posY, int sizeY, int imageSizeX, int imageSizeY, int iconSize) {
+  public int padX;
+  public int padY;
+  
+  public ExplanationCanvas(int posX, int posY, int padX, int padY, int sizeY, int imageSizeX, int imageSizeY, int iconSize) {
     this.posY = posY;
     this.posX = posX;
     this.sizeX = width - 2*posX;
@@ -25,6 +29,8 @@ class ExplanationCanvas extends Canvas {
     this.imageSizeX = imageSizeX;
     this.imageSizeY = imageSizeY;
     this.iconSize = iconSize;
+    this.padX = padX;
+    this.padY = padY;
   }
   
   public void updateIcons(ArrayList<ExplanationIcon> icons) {
@@ -36,11 +42,13 @@ class ExplanationCanvas extends Canvas {
   }
   
   public void draw(PGraphics pg){
-    pg.fill(0,0,150,100);
+    pg.fill(color(238, 233, 209, 100));
     pg.rect(posX, posY, sizeX, sizeY);
+    pg.fill(color(0, 0, 0, 10));
+    pg.rect(posX + padX, posY + padY, sizeX - padX * 2 - imageSizeX - padX, iconSize + padY); 
     
-    int imgX = posX + sizeX - imageSizeX;
-    int imgY = posY;
+    int imgX = posX + sizeX - imageSizeX - padX;
+    int imgY = posY + padY;
     if (img != null)
       pg.image(this.img, imgX, imgY, imageSizeX, imageSizeY);
       
@@ -56,7 +64,7 @@ class ExplanationCanvas extends Canvas {
         mask.endDraw();
         
         icon.icon.mask(mask);
-        image(icon.icon, posX + i*(iconSize + 10), posY, iconSize, iconSize);
+        image(icon.icon, posX + padX * 2 + i*(iconSize + padX), posY + padY * 1.5, iconSize, iconSize);
       }
     }
      
@@ -66,25 +74,38 @@ class ExplanationCanvas extends Canvas {
 ExplanationBox setExplanationBox(ControlP5 cp5, int posY) {
   
   int posX = 50;
-  int sizeY = 500;
+  int sizeY = 550;
   
-  int imageSizeX = 200;
-  int imageSizeY = 400;
+  int padX = 15;
+  int padY = 15;
+  
+  int imageSizeX = 300;
+  int imageSizeY = sizeY - padY * 2;
   int iconSize = 100;
   
   ExplanationBox eBox = new ExplanationBox();
   
-  Textarea textarea = cp5.addTextarea("explanation")
-                .setPosition(posX, posY + iconSize)
-                .setSize(width - 2*posX - imageSizeX, sizeY)
-                .setFont(createFont("NanumGothic",16))
-                .setColorBackground(color(0,0,0));
-  
-  ExplanationCanvas cc = new ExplanationCanvas(posX, posY, sizeY, imageSizeX, imageSizeY, iconSize);
+  ExplanationCanvas cc = new ExplanationCanvas(posX, posY, padX, padY, sizeY, imageSizeX, imageSizeY, iconSize);
   cc.post();
-  cp5.addCanvas(cc);
+  cp5.addCanvas(cc);  
+  
+  Textlabel title = cp5.addTextlabel("explanation title")
+                           .setPosition(posX + padX, posY +iconSize + padY * 3)
+                           .setSize(300, 50)
+                           .setFont(ExplanationTitlefont)
+                           .setColor(color(0));
+  
+  Textarea textarea = cp5.addTextarea("explanation")
+                .setPosition(posX + padX, posY + iconSize + padY * 5)
+                .setSize(width - 2*posX - imageSizeX - 3 * padX, sizeY - iconSize - padY * 5)
+                .setFont(Explanationfont)
+                .setColor(color(0))
+                .disableColorBackground();
+  
+
   
   eBox.textarea = textarea;
+  eBox.title = title;
   eBox.canvas = cc;
   
   return eBox;

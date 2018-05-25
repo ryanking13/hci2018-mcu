@@ -10,7 +10,9 @@ Button setSearchButton(ControlP5 cp5, int posY) {
   
   Button b = cp5.addButton("search")
                 .setPosition(posX, posY)
-                .setSize(sizeX, sizeY);
+                .setSize(sizeX, sizeY)
+                .setColor(colorset)
+                .setFont(UIfont);
   
   return b;
 }
@@ -23,13 +25,14 @@ public void search(int value) {
 ButtonBar setTypeButtons(ControlP5 cp5, ArrayList<String> typeList, int posY) {
   
   int typesCount = typeList.size();
-  int sizeX = 100 * typesCount;
+  int sizeX = 120 * typesCount;
   int sizeY = 50;
-  int posX = width/2 - sizeX / 2 - 100;
+  int posX = width/2 - sizeX / 2 - 120;
                  
   ButtonBar bb = cp5.addButtonBar("typeButtons")
                     .setPosition(posX, posY)
-                    .setSize(sizeX, sizeY);
+                    .setSize(sizeX, sizeY)
+                    .setColor(colorset);
                     
   for(int i = 0; i < typesCount; i++) {
     bb.addItem(typeList.get(i), i);
@@ -37,6 +40,9 @@ ButtonBar setTypeButtons(ControlP5 cp5, ArrayList<String> typeList, int posY) {
   
   bb.changeItem("Event","selected", true);
   choice.type = "Event";
+  
+  bb.getValueLabel().setFont(UIfont);
+  bb.setCaptionLabel("asdf");
   
   return bb;
 }

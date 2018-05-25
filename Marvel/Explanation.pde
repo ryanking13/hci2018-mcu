@@ -40,10 +40,18 @@ ArrayList<Explanation> getExplanations() {
   avengers1BigEvent.timelineColor = c0;
   avengers1BigEvent.timelineLength = 50;
   avengers1BigEvent.timelinePosX = 100;
-  avengers1BigEvent.explanation = "블라블라";
   avengers1BigEvent.image = loadImage("Images/ironman.jpg");
   avengers1BigEvent.icons.add(new ExplanationIcon("Images/ironman.jpg", "ironman"));
-  avengers1BigEvent.icons.add(new ExplanationIcon("Images/ironman.jpg", "ironman"));
+  avengers1BigEvent.icons.add(new ExplanationIcon("Images/ironman.jpg", "ironman2"));
+  avengers1BigEvent.explanation = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." + 
+                                  "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure" +
+                                  " dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non" +
+                                  " proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+  
+  // for scroll test
+  for(int i = 0; i < 5; i++)
+    avengers1BigEvent.explanation = avengers1BigEvent.explanation + avengers1BigEvent.explanation;
+
   explanations.add(avengers1BigEvent);
   
   Explanation Ironman2BigEvent = new Explanation("Ironman 2", "무시무시한 이벤트", "Event");

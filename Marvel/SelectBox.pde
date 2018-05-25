@@ -11,11 +11,15 @@ ScrollableList setMovieList(ControlP5 cp5, ArrayList<String> movieList, int posY
   ScrollableList sl = cp5.addScrollableList("movieListDropDown")
                         .setPosition(posX, posY)
                         .setSize(sizeX, height)
+                        .setColor(colorset)
                         .setBarHeight(sizeY)
                         .setItemHeight(sizeY)
                         .addItems(movieList)
                         .close();            
-                       
+  
+  sl.setCaptionLabel("Select Movie");
+  sl.getCaptionLabel().setFont(UIfont);
+  sl.getValueLabel().setFont(UIfont);
   return sl;
 }
 
@@ -24,10 +28,4 @@ void movieListDropDown(int n) {
   
   Map m = cp5.get(ScrollableList.class, "movieListDropDown").getItem(n);
   choice.movie = (String)m.get("name");
-  
-  // set color
-  CColor c = new CColor();
-  c.setBackground(color(255,0,0));
-  cp5.get(ScrollableList.class, "movieListDropDown").getItem(n).put("color", c);
-  
 }

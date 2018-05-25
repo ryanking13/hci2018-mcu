@@ -15,8 +15,24 @@ ArrayList<String> targetMovieList;
 ArrayList<String> typeList;
 ArrayList<Explanation> explanations;
 
+PFont UIfont;
+PFont Explanationfont;
+PFont ExplanationTitlefont;
+
+CColor colorset;
+
 void setup() {
   size(1280, 1000);
+  noStroke();
+  
+  colorset = new CColor();
+  colorset.setBackground(color(10, 85, 92));
+  colorset.setForeground(color(65, 132, 143));
+  colorset.setActive(color(151, 192, 183));
+  
+  UIfont = loadFont("data/NanumGothicExtraBold-18.vlw");
+  Explanationfont = loadFont("data/OTMGothicM-16.vlw");
+  ExplanationTitlefont = loadFont("data/OTMGothicBK-24.vlw");
   cp5 = new ControlP5(this);
   choice = new Choice();
   
@@ -43,7 +59,8 @@ void setup() {
 }
 
 void draw() {
-  background(0);
+  background(0x95a5a6);
+  fill(color(238, 233, 209, 100));
   rect(50, 200, width-100, 150);
 }
 
@@ -83,12 +100,19 @@ void generateTimeline() {
     if (choice.movie == ts.movieName) {
       cp5.addTextlabel("start")
          .setText(ts.start)
-         .setPosition(50, 350)
-         .setSize(50, 50);
+         .setPosition(0, 155)
+         .setSize(50, 50)
+         .setColor(color(0,0,0,128))
+         .setFont(UIfont)
+         .setGroup("timeline");
+         
       cp5.addTextlabel("end")
          .setText(ts.end)
-         .setPosition(width-100, 350)
-         .setSize(50, 50);
+         .setPosition(width-150, 155)
+         .setSize(50, 50)
+         .setColor(color(0,0,0,128))
+         .setFont(UIfont)
+         .setGroup("timeline");
     }
   }
 }
@@ -110,6 +134,7 @@ void onTimelineClick(String timelineName) {
     Explanation expl = explanations.get(j);
     if(expl.targetMovieName == choice.movie && expl.name == timelineName && expl.type == choice.type) {
       eBox.textarea.setText(expl.explanation);
+      eBox.title.setText(expl.name);
       eBox.canvas.updateImage(expl.image);
       eBox.canvas.updateIcons(expl.icons);
     }
