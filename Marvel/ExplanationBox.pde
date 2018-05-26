@@ -31,6 +31,13 @@ class ExplanationCanvas extends Canvas {
     this.iconSize = iconSize;
     this.padX = padX;
     this.padY = padY;
+    
+    cp5.addButton("textareaBackground")
+       .setLabelVisible(false)
+       .setSize(sizeX, sizeY)
+       .setPosition(posX, posY)
+       .setColorBackground(color(238, 233, 209, 100))
+       .lock();
   }
   
   public void updateIcons(ArrayList<ExplanationIcon> icons) {
@@ -52,14 +59,14 @@ class ExplanationCanvas extends Canvas {
     }
     
     
-    for(int i = 0; i < icons.size(); i++) {
+    for(int i = 0; i < this.icons.size(); i++) {
       cp5.get(Button.class, "explanationIcon" + str(i))
-         .setImage(icons.get(i).icon)
-         .setLabel(icons.get(i).description)
+         .setImage(this.icons.get(i).icon)
+         .setLabel(this.icons.get(i).description)
          .show();
     }
     
-    for(int i = icons.size(); i < MAX_ICONS; i++) {
+    for(int i = this.icons.size(); i < MAX_ICONS; i++) {
       cp5.get(Button.class, "explanationIcon" + str(i))
          .hide();
     }
@@ -70,8 +77,8 @@ class ExplanationCanvas extends Canvas {
   }
   
   public void draw(PGraphics pg){
-    pg.fill(color(238, 233, 209, 100));
-    pg.rect(posX, posY, sizeX, sizeY);
+    //pg.fill(color(238, 233, 209, 100));
+    //pg.rect(posX, posY, sizeX, sizeY);
     pg.fill(color(0, 0, 0, 10));
     pg.rect(posX + padX, posY + padY, sizeX - padX * 2 - imageSizeX - padX, iconSize + padY); 
     
@@ -128,24 +135,37 @@ ExplanationBox setExplanationBox(ControlP5 cp5, int posY) {
                 .setSize(width - 2*posX - imageSizeX - 3 * padX, sizeY - iconSize - padY * 5)
                 .setFont(Explanationfont)
                 .setColor(color(0))
+                .setLineHeight(24)
                 .bringToFront()
                 .disableColorBackground();
                 
   for(int i = 0; i < MAX_ICONS; i++) {
+    float iconPosX = posX + padX * 2 + i*(iconSize + padX);
+    float iconPosY = posY + padY * 1.5;
     cp5.addButton("explanationIcon" + str(i))
        .setSize(iconSize, iconSize)
-       .setPosition(posX + padX * 2 + i*(iconSize + padX), posY + padY * 1.5)
+       .setPosition(iconPosX, iconPosY)
        .hide()
        .addCallback(new CallbackListener(){
+         
+         public float posX;
+         public float posY;
+         
+         public CallbackListener setPos(float posX, float posY){
+           this.posX = posX;
+           this.posY = posY;
+           return this;
+         }
+         
          public void controlEvent(CallbackEvent ev) {
            if(ev.getAction() == 6){ // hover
-             onIconHover(ev.getController().getLabel());
+             onIconHover(ev.getController().getLabel(), posX, posY);
            }
            else if(ev.getAction() == 7){ // hover out
              onIconHoverOut();
            }
          }
-       });
+       }.setPos(iconPosX, iconPosY));
   }
   
   iconDescription = cp5.addTextlabel("iconDescription")
@@ -164,9 +184,9 @@ ExplanationBox setExplanationBox(ControlP5 cp5, int posY) {
   return eBox;
 }
 
-void onIconHover(String description) {
+void onIconHover(String description, float posX, float posY) {
   iconDescription.setText(description)
-                 .setPosition(mouseX + 10, mouseY)
+                 .setPosition(posX, posY - 30)
                  .bringToFront()
                  .show();
 }

@@ -18,6 +18,7 @@ ArrayList<Explanation> explanations;
 
 PFont UIfont;
 PFont Explanationfont;
+PFont ExplanationSmallfont;
 PFont ExplanationTitlefont;
 
 CColor colorset;
@@ -35,6 +36,7 @@ void setup() {
   
   UIfont = loadFont("data/NanumGothicExtraBold-18.vlw");
   Explanationfont = loadFont("data/OTMGothicM-16.vlw");
+  ExplanationSmallfont = loadFont("data/OTMGothicM-14.vlw");
   ExplanationTitlefont = loadFont("data/OTMGothicBK-24.vlw");
   cp5 = new ControlP5(this);
   choice = new Choice();
@@ -59,12 +61,28 @@ void setup() {
   eBox = setExplanationBox(cp5, 400);
   
   movieSelectList.bringToFront();
+  
+  //cp5.addTextarea("timelineBackground")
+  //   .setSize(width-100, 150)
+  //   .setPosition(50, 200)
+  //   .setColorBackground(color(238, 233, 209, 100));
 }
 
 void draw() {
   background(0x95a5a6);
-  fill(color(238, 233, 209, 100));
+  fill(color(238, 233, 209, 50));
   rect(50, 200, width-100, 150);
+}
+
+
+String formatLabelText(String text, int maxLineLength) {
+  String label = "";
+  
+  for(int i = 0; i < text.length(); i += maxLineLength){
+    label += text.substring(i, min(i+maxLineLength, text.length())) + "\n";
+  }
+  
+  return label;
 }
 
 
@@ -85,6 +103,7 @@ void generateTimeline() {
       Button b = cp5.addButton(e.name)
                     .setPosition(e.timelinePosX, 0)
                     .setSize(e.timelineLength, 150)
+                    .setFont(ExplanationSmallfont)
                     .setColor(e.timelineColor)
                     .setColorBackground(e.timelineColor.getBackground())
                     .setGroup("timeline")
@@ -95,6 +114,13 @@ void generateTimeline() {
                         }
                       }
                     });
+                    
+      int charPerLine = 7;
+      b.getCaptionLabel()
+       .setText(formatLabelText(e.name, charPerLine))
+       .getStyle()
+       .setMarginTop(-7*(e.name.length()/charPerLine));
+       
       timeline.add(b);
     }
   }
