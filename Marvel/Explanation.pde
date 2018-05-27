@@ -137,7 +137,17 @@ ArrayList<Explanation> getExplanations() {
   Avengers1Iron.icons.add(new ExplanationIcon("Images/nat.jpeg", "나타샤 로마노프"));
   Avengers1Iron.icons.add(new ExplanationIcon("Images/rode.png", "제임스 로드"));
   Avengers1Iron.icons.add(new ExplanationIcon("Images/nick.png", "닉 퓨리"));
-  Avengers1Iron.explanation = "";
+  Avengers1Iron.explanation = "토니 스타크는 미국 최고 군수업체인 스타크 인더스트리의 CEO이자 천재 무기 개발자이다. 그가" +
+                              "아프가니스탄에서 신형 무기인 제리코 미사일을 시연하고 돌아오는 중 라자가 이끄는 게릴라군" +
+                              "에게 납치된다. 이 과정에서 가슴에 부상을 입어 파편조각이 심장에 박히게 되고, 전자석을 이" +
+                              "용하여 파편이 더이상 심장에 파고들지 못하게 하여 겨우 목숨을 부지한다. 게릴라군은 그에게" +
+                              "제리코 미사일 같은 강력한 무기를 만들라고 지시한다. 그러나 토니 스타크는 그곳에 같이 납치" +
+                              "되어있던 잉센과 함께 소형 아크 원자로를 개발하고, 이를 동력으로 하는 철갑 수트이자 아이언" +
+                              "맨의 프로토타입인 Mark1입고 탈출한다. 이후 이전 모델의 문제점을 개선하여 Mark2, Mark3를" +
+                              "만들어낸다. 그러나 소형 아크 원자로에 사용되는 팔라듐 수치 때문에 혈중 팔라듐 수치가 점점 " +
+                              "올라가고, 생명에 위협이 되는 수준까지 온다. 아버지인 하워드 스타크의 유품을 살펴보던 중 아" +
+                              "버지가 스타크 엑스포에 남겨두신 새로운 물질에 대한 힌트를 얻게 되고, 이를 통해 새로운 물질" +
+                              "을 발견하여 더 안전하고 강력해진 아크 원자로를 개발하게 된다.";
   explanations.add(Avengers1Iron);
   
   Explanation Avengers1Hulk = new Explanation("Avengers 1", "헐크", "Event");
@@ -151,7 +161,10 @@ ArrayList<Explanation> getExplanations() {
   Avengers1Hulk.year = 2008;
   Avengers1Hulk.image = loadImage("Images/Avengers1Hulk.png");
   Avengers1Hulk.icons.add(new ExplanationIcon("Images/bb.jpeg", "브루스 배너"));
-  Avengers1Hulk.explanation = "";
+  Avengers1Hulk.explanation = "과학자인 브루스 배너는 실험 중 사고로 인해 감마선에 노출이 되고, 화가 나면 스스로 제어하지 못하는" +
+                              "헐크로 변하게 된다. 감마선으로 변형된 헐크의 피부는 총검으로 뚫을 수 없고, 트럭을 집어던질 정도로" +
+                              " 힘이 세진다. 자신의 주위 사람들에게 피해를 끼칠 수 있다는 점을 깨달은 브루스 배너는 아무도 찾지 못" +
+                              "하는 외딴곳에 은거하여 화를 다르시는 법을 수련한다.";
   explanations.add(Avengers1Hulk);
   
   Explanation Avengers1TR = new Explanation("Avengers 1", "토르와 로키", "Event");
@@ -167,7 +180,13 @@ ArrayList<Explanation> getExplanations() {
   Avengers1TR.icons.add(new ExplanationIcon("Images/thor.png", "토르"));
   Avengers1TR.icons.add(new ExplanationIcon("Images/roki.png", "로키"));
   Avengers1TR.icons.add(new ExplanationIcon("Images/odin.png", "오딘"));
-  Avengers1TR.explanation = "";
+  Avengers1TR.explanation = "우주의 9개의 왕국의 지배자이자 신들의 신인 오딘은 토르와 로키 두 아들을 가지고 있다. 토르는 천둥의 신으" +
+                            "로 전설의 망치인 묠니르를 제어하는데 성공하여 오딘의 후계자로 주목이 되어왔다. 그러나 호전적인 성격을 주" +
+                            "하지 못하고 요툰헤임으로 혼자 쳐들어가 신들의 전쟁을 일으킬 뻔 하고, 이에 오딘은 책임을 물어 토르에게 모" +
+                            "든 권한을 박탈하고 미스가르드(지구)로 추방시킨다. 이 틈을 타 로키는 왕좌를 차지하려 하고, 더 확실히 하기" +
+                            " 위해 토르를 죽이러 디스트로이어를 지구에 보낸다. 토르가 디스트로이어를 처치하는 과정에서 잃었던 힘을 되" +
+                            "찾고, 다시 아스가르드로 돌아간다. 아스가르드에서 로키가 요툰헤임을 파괴하려는 계획을 저지하는 도중 행성들" +
+                            "간의 이동 수단인 바이프로스트는 파괴되고, 로키는 끝없는 우주의 나락으로 떨어지게 된다.";
   explanations.add(Avengers1TR);
  
   
