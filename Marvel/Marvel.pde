@@ -122,28 +122,35 @@ void generateTimeline() {
        .setMarginTop(-7*(e.name.length()/charPerLine));
        
       timeline.add(b);
+      
+      Textlabel lb = cp5.addTextlabel(e.name + str(e.year))
+                        .setText(str(e.year))
+                        .setPosition(e.timelinePosX, 160)
+                        .setFont(Explanationfont)
+                        .setColor(color(0,0,0))
+                        .setGroup("timeline");
     }
   }
   
-  for(Timestamp ts: timestamps) {
-    if (choice.movie == ts.movieName) {
-      cp5.addTextlabel("start")
-         .setText(ts.start)
-         .setPosition(0, 155)
-         .setSize(50, 50)
-         .setColor(color(0,0,0,128))
-         .setFont(UIfont)
-         .setGroup("timeline");
+  //for(Timestamp ts: timestamps) {
+  //  if (choice.movie == ts.movieName) {
+  //    cp5.addTextlabel("start")
+  //       .setText(ts.start)
+  //       .setPosition(0, 155)
+  //       .setSize(50, 50)
+  //       .setColor(color(0,0,0,128))
+  //       .setFont(UIfont)
+  //       .setGroup("timeline");
          
-      cp5.addTextlabel("end")
-         .setText(ts.end)
-         .setPosition(width-150, 155)
-         .setSize(50, 50)
-         .setColor(color(0,0,0,128))
-         .setFont(UIfont)
-         .setGroup("timeline");
-    }
-  }
+  //    cp5.addTextlabel("end")
+  //       .setText(ts.end)
+  //       .setPosition(width-150, 155)
+  //       .setSize(50, 50)
+  //       .setColor(color(0,0,0,128))
+  //       .setFont(UIfont)
+  //       .setGroup("timeline");
+  //  }
+  //}
 }
 
 void onTimelineClick(String timelineName) {
