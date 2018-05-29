@@ -50,6 +50,9 @@ ButtonBar setTypeButtons(ControlP5 cp5, ArrayList<String> typeList, int posY) {
 void typeButtons(int n) {
   Map m = (Map)cp5.get(ButtonBar.class, "typeButtons").getItems().get(n);
   choice.type = (String)m.get("name");
+  
+  // Character is not implemented
+  if (choice.type == "Character") choice.type = "Event";
 }
 
 // Not Using
