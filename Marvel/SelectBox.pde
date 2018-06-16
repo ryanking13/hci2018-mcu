@@ -28,4 +28,13 @@ void movieListDropDown(int n) {
   
   Map m = cp5.get(ScrollableList.class, "movieListDropDown").getItem(n);
   choice.movie = (String)m.get("name");
+  
+  if (cp5.getGroup("timeline") != null) {
+    cp5.getGroup("timeline").remove();
+  }
+  
+  eBox.textarea.setText("");
+  eBox.title.setText("");
+  eBox.canvas.updateImage(null);
+  eBox.canvas.updateIcons(null);
 }

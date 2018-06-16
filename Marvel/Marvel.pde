@@ -1,5 +1,6 @@
 import controlP5.*;
 import java.util.*;
+import java.time.*;
 
 ControlP5 cp5;
 ScrollableList movieSelectList;
@@ -24,6 +25,9 @@ PFont ExplanationTitlefont;
 CColor colorset;
 
 int MAX_ICONS = 5;
+
+boolean showDisabled = false;
+long showDisabledTime;
 
 void setup() {
   size(1280, 1000);
@@ -72,6 +76,18 @@ void draw() {
   background(0x95a5a6);
   fill(color(238, 233, 209, 50));
   rect(50, 200, width-100, 150);
+  
+  if (showDisabled) {
+    if(System.currentTimeMillis() - showDisabledTime > 1500) {
+      showDisabled = false;
+    }
+    
+    fill(color(0, 0, 0));
+    rect(width/2 - 200, height/2 - 100, 400, 200);
+    textSize(32);
+    fill(color(255, 255, 255));
+    text("Not Implemented", width/2 - 120, height/2);
+  }
 }
 
 
@@ -131,6 +147,13 @@ void generateTimeline() {
                         .setGroup("timeline");
     }
   }
+  
+  cp5.addTextlabel("사건년도")
+     .setText("사건년도")
+     .setPosition(-50, 160)
+     .setFont(ExplanationSmallfont)
+     .setColor(color(0,0,0))
+     .setGroup("timeline");
   
   //for(Timestamp ts: timestamps) {
   //  if (choice.movie == ts.movieName) {

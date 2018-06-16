@@ -52,7 +52,13 @@ void typeButtons(int n) {
   choice.type = (String)m.get("name");
   
   // Character is not implemented
-  if (choice.type == "Character") choice.type = "Event";
+  if (choice.type == "Character") {
+    showDisabled = true;
+    showDisabledTime = System.currentTimeMillis();
+    choice.type = "Event";
+    typeButtons.changeItem("Event", "selected", true);
+    typeButtons.changeItem("Character", "selected", false);
+  }
 }
 
 // Not Using

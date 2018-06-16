@@ -56,6 +56,11 @@ class ExplanationCanvas extends Canvas {
         mask.endDraw();
         icon.icon.mask(mask);
       }
+    } else {
+      for(int i = 0; i < MAX_ICONS; i++) {
+        cp5.get(Button.class, "explanationIcon" + str(i))
+           .hide();        
+      }
     }
     
     
