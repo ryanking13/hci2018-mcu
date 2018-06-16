@@ -38,6 +38,13 @@ class ExplanationCanvas extends Canvas {
        .setPosition(posX, posY)
        .setColorBackground(color(238, 233, 209, 100))
        .lock();
+       
+    cp5.addTextlabel("characterLabel")
+       .setText("관련 등장인물")
+       .setPosition(posX + padX * 2, posY + padY*2)
+       .setFont(ExplanationSmallfont)
+       .setColor(color(0,0,0))
+       .hide();
   }
   
   public void updateIcons(ArrayList<ExplanationIcon> icons) {
@@ -56,24 +63,28 @@ class ExplanationCanvas extends Canvas {
         mask.endDraw();
         icon.icon.mask(mask);
       }
+      
+      for(int i = 0; i < this.icons.size(); i++) {
+        cp5.get(Button.class, "explanationIcon" + str(i))
+           .setImage(this.icons.get(i).icon)
+           .setLabel(this.icons.get(i).description)
+           .show();
+      }
+    
+      for(int i = this.icons.size(); i < MAX_ICONS; i++) {
+        cp5.get(Button.class, "explanationIcon" + str(i))
+           .hide();
+      }
+      
+      cp5.get(Textlabel.class, "characterLabel").show();
+      
     } else {
       for(int i = 0; i < MAX_ICONS; i++) {
         cp5.get(Button.class, "explanationIcon" + str(i))
            .hide();        
       }
-    }
-    
-    
-    for(int i = 0; i < this.icons.size(); i++) {
-      cp5.get(Button.class, "explanationIcon" + str(i))
-         .setImage(this.icons.get(i).icon)
-         .setLabel(this.icons.get(i).description)
-         .show();
-    }
-    
-    for(int i = this.icons.size(); i < MAX_ICONS; i++) {
-      cp5.get(Button.class, "explanationIcon" + str(i))
-         .hide();
+      
+      cp5.get(Textlabel.class, "characterLabel").hide();
     }
   }
   
@@ -85,7 +96,7 @@ class ExplanationCanvas extends Canvas {
     //pg.fill(color(238, 233, 209, 100));
     //pg.rect(posX, posY, sizeX, sizeY);
     pg.fill(color(0, 0, 0, 10));
-    pg.rect(posX + padX, posY + padY, sizeX - padX * 2 - imageSizeX - padX, iconSize + padY); 
+    pg.rect(posX + padX, posY + padY, sizeX - padX * 2 - imageSizeX - padX, iconSize + padY * 3); 
     
     int imgX = posX + sizeX - imageSizeX - padX;
     int imgY = posY + padY;
@@ -130,13 +141,13 @@ ExplanationBox setExplanationBox(ControlP5 cp5, int posY) {
   cp5.addCanvas(cc);  
   
   Textlabel title = cp5.addTextlabel("explanation title")
-                           .setPosition(posX + padX, posY +iconSize + padY * 3)
+                           .setPosition(posX + padX, posY +iconSize + padY * 5)
                            .setSize(300, 50)
                            .setFont(ExplanationTitlefont)
                            .setColor(color(0));
   
   Textarea textarea = cp5.addTextarea("explanation")
-                .setPosition(posX + padX, posY + iconSize + padY * 5)
+                .setPosition(posX + padX, posY + iconSize + padY * 7)
                 .setSize(width - 2*posX - imageSizeX - 3 * padX, sizeY - iconSize - padY * 5)
                 .setFont(Explanationfont)
                 .setColor(color(0))
@@ -145,8 +156,8 @@ ExplanationBox setExplanationBox(ControlP5 cp5, int posY) {
                 .disableColorBackground();
                 
   for(int i = 0; i < MAX_ICONS; i++) {
-    float iconPosX = posX + padX * 2 + i*(iconSize + padX);
-    float iconPosY = posY + padY * 1.5;
+    float iconPosX = posX + padX * 2 + i*(iconSize + padX) + 100;
+    float iconPosY = posY + padY * 3.5;
     cp5.addButton("explanationIcon" + str(i))
        .setSize(iconSize, iconSize)
        .setPosition(iconPosX, iconPosY)
@@ -180,6 +191,11 @@ ExplanationBox setExplanationBox(ControlP5 cp5, int posY) {
                        .setFont(ExplanationTitlefont)
                        .hide();
   
+  iconDescriptionBackground = cp5.addTextarea("iconDescriptionBackground")
+                                 .setSize(200, 100)
+                                 .setColor(color(0))
+                                 .setColorBackground(color(0))
+                                 .hide();
 
   
   eBox.textarea = textarea;
@@ -198,4 +214,5 @@ void onIconHover(String description, float posX, float posY) {
 
 void onIconHoverOut() {
   iconDescription.hide();
+  iconDescriptionBackground.hide();
 }

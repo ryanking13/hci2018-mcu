@@ -12,6 +12,7 @@ ArrayList<Timestamp> timestamps;
 Choice choice;
 ExplanationBox eBox;
 Textlabel iconDescription;
+Textarea iconDescriptionBackground;
 
 ArrayList<String> targetMovieList;
 ArrayList<String> typeList;
