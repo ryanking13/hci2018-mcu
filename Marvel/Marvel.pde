@@ -132,7 +132,7 @@ void generateTimeline() {
                       }
                     });
                     
-      int charPerLine = 7;
+      int charPerLine = 10;
       b.getCaptionLabel()
        .setText(formatLabelText(e.name, charPerLine))
        .getStyle()
@@ -142,7 +142,7 @@ void generateTimeline() {
       
       Textlabel lb = cp5.addTextlabel(e.name + str(e.year))
                         .setText(str(e.year))
-                        .setPosition(e.timelinePosX, 160)
+                        .setPosition(e.timelinePosX + ((e.timelineLength - 50)/2), 160)
                         .setFont(Explanationfont)
                         .setColor(color(0,0,0))
                         .setGroup("timeline");
